@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamio.Mobile", "Roamio.Mobile\Roamio.Mobile.csproj", "{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamio.API", "Roamio.API\Roamio.API.csproj", "{48724371-3DC8-433D-B645-9ECCD7E07F28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C9C59D-3FB7-46F5-B01F-3F37947FDB8B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{48724371-3DC8-433D-B645-9ECCD7E07F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48724371-3DC8-433D-B645-9ECCD7E07F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48724371-3DC8-433D-B645-9ECCD7E07F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48724371-3DC8-433D-B645-9ECCD7E07F28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

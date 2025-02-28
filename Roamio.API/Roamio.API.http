@@ -1,0 +1,6 @@
+@Roamio.API_HostAddress = http://localhost:5068
+
+GET {{Roamio.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
