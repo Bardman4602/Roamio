@@ -20,7 +20,7 @@ builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 var awsOptions = builder.Configuration.GetAWSOptions();
 builder.Services.AddDefaultAWSOptions(awsOptions);
 builder.Services.AddAWSService<IAmazonDynamoDB>();
-builder.Services.AddSingleton<IDynamoDBContext, DynamoDBContext>(); // AddScoped or AddSingleton??
+builder.Services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
 
 var app = builder.Build();
 
