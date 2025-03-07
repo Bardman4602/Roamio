@@ -5,11 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Roamio.Mobile"
     Shell.FlyoutBehavior="Disabled"
-    Title="Roamio.Mobile">
+    xmlns:views="clr-namespace:Roamio.Mobile.Views"
+    Title="Roamio">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Sign Up"
+        Route="SignUpPage" 
+        ContentTemplate="{DataTemplate views:SignUpPage}" />
 
 </Shell>
