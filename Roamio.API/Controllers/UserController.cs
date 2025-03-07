@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Roamio.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IDynamoDBContext _context;
@@ -40,7 +40,22 @@ namespace Roamio.API.Controllers
             {
                 user.Id = System.Guid.NewGuid().ToString();
             }
-            await _context.SaveAsync(user);
+
+            try
+            {
+                await _context.SaveAsync(user);
+
+                var savedUser = await _context.LoadAsync<User>(user.Id);
+                if (savedUser == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("User save appeared to succeed, but reloading returned null.");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error saving user: {ex}");
+                return StatusCode(500, ex.Message);
+            }
 
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }

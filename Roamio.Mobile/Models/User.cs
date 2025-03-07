@@ -1,30 +1,20 @@
-﻿using Amazon.DynamoDBv2.DataModel;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Roamio.Mobile.Services;
 
-namespace Roamio.API.Models
+namespace Roamio.Mobile.Models
 {
-    [DynamoDBTable("Users")]
     public class User
     {
-        [DynamoDBHashKey] // Partition key
         public string Id { get; set; }
-
-        [DynamoDBProperty]
         public string Username { get; set; }
-
-        [DynamoDBProperty]
         public string HashedPassword { get; set; }
-
-        [DynamoDBProperty]
         public Dictionary<string, string> Preferences { get; set; }
-
-        [DynamoDBProperty]
         public string CurrentTrip { get; set; }
-
-        [DynamoDBProperty]
         public List<string> TripHistory { get; set; }
-
-        [DynamoDBProperty]
         public string DailyPlans { get; set; }
     }
 }
