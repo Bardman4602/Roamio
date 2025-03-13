@@ -8,9 +8,15 @@
     xmlns:views="clr-namespace:Roamio.Mobile.Views"
     Title="Roamio">
 
-    <ShellContent
+    <!--User handling - on ice for now..--> 
+    <!--<ShellContent
         Title="Sign Up"
         Route="SignUpPage" 
-        ContentTemplate="{DataTemplate views:SignUpPage}" />
+        ContentTemplate="{DataTemplate views:SignUpPage}" />-->
+
+    <ShellContent
+        Title="Destination Picker"
+        Route="destinationPicker"
+        ContentTemplate="{DataTemplate views:DestinationPickerPage}" />
 
 </Shell>

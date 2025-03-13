@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Http;
+using Microsoft.Extensions.Configuration;
 using Roamio.Mobile.Services;
 
 
@@ -12,6 +12,9 @@ namespace Roamio.Mobile
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -23,11 +26,15 @@ namespace Roamio.Mobile
             // AWS API Base url.
             builder.Services.AddHttpClient("APIClient", client =>
             {
-                client.BaseAddress = new Uri("https://vh9kmuogbf.execute-api.eu-north-1.amazonaws.com/Dev");
+                client.BaseAddress = new Uri("https://vh9kmuogbf.execute-api.eu-north-1.amazonaws.com"); // Add back /Dev if next test doesn't work.
             });
+
+            // Google Maps Client
+            builder.Services.AddHttpClient("GoogleMapsClient");
 
             // DI
             builder.Services.AddTransient<IApiService, ApiService>();
+            builder.Services.AddTransient<IGoogleMapsService, GoogleMapsService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -53,7 +53,6 @@ namespace Roamio.Mobile.Services
             }
         }
 
-
         public async Task<Trip> GetTripAsync(string id, string userId)
         {
             var response = await _client.GetAsync($"/Trip/{id}/{userId}");
@@ -92,6 +91,21 @@ namespace Roamio.Mobile.Services
                 return await response.Content.ReadFromJsonAsync<UserPreferences>();
             }
             return null;
+        }
+
+        public async Task<Trip> CreateTripAsync(Trip trip)
+        {
+            var response = await _client.PostAsJsonAsync("/Dev/Trip", trip);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<Trip>();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"Error creating trip: {response.StatusCode} - {errorContent}");
+                return null;
+            }
         }
     }
 }

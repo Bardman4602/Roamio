@@ -13,15 +13,15 @@ namespace Roamio.API.Models
         public string Location { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> Places { get; set; }
+        public Dictionary<string, string> Places { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> Navigation { get; set; }
+        public Dictionary<string, string> Navigation { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> GeoCoding { get; set; }
+        public Dictionary<string, string> GeoCoding { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> PublicTransport { get; set; }
+        public Dictionary<string, string> PublicTransport { get; set; }
     }
 }

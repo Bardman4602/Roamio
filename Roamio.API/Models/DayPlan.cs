@@ -28,12 +28,12 @@ namespace Roamio.API.Models
         public List<string> Suggestions { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> GoogleMapsData { get; set; }
+        public Dictionary<string, string> GoogleMapsData { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> UserPreferences { get; set; }
+        public Dictionary<string, string> UserPreferences { get; set; }
 
         [DynamoDBProperty]
-        public Dictionary<string, object> UserSelections { get; set; }
+        public Dictionary<string, string> UserSelections { get; set; }
     }
 }
