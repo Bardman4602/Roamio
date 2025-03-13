@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Roamio.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class GoogleMapsDataController : ControllerBase
     {
         private readonly IDynamoDBContext _context;

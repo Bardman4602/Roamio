@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Roamio.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TripController : ControllerBase
     {
         private readonly IDynamoDBContext _context;
@@ -30,8 +30,10 @@ namespace Roamio.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTrip([FromBody] Trip trip)
         {
+            Console.WriteLine("Received request to create trip...");
             if (trip == null)
             {
+                Console.WriteLine("Trip is null.");
                 return BadRequest();
             }
 
@@ -42,6 +44,7 @@ namespace Roamio.API.Controllers
             await _context.SaveAsync(trip);
 
             return CreatedAtAction(nameof(GetTrip), new { id = trip.Id, userId = trip.UserId }, trip);
+            Console.WriteLine("Trip created successfully.");
         }
 
         [HttpPut("{id}/{userId}")]

@@ -14,8 +14,8 @@ namespace Roamio.Mobile.Models
         public string Destination { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-        public Dictionary<string, object> UserPreferences { get; set; }
-        public Dictionary<string, object> GoogleMapsData { get; set; }
+        public UserPreferences UserPreferences { get; set; }
+        public Dictionary<string, string> GoogleMapsData { get; set; }
         public List<string> DailyPlans { get; set; }
     }
 }

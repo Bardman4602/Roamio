@@ -11,6 +11,7 @@ namespace Roamio.Mobile.Services
     {
         Task<User> GetUserAsync(string id);
         Task<User> CreateUserAsync(User user);
+        Task<Trip> CreateTripAsync(Trip trip);
         Task<Trip> GetTripAsync(string id, string userId);
         Task<DayPlan> GetDayPlanAsync(string tripId, string date);
         Task<GoogleMapsData> GetGoogleMapsDataAsync(string userId, string location);
