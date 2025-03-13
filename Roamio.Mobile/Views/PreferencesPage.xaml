@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Roamio.Mobile.Views.PreferencesPage"
+             Title="Trip Preferences"> <!--I want this to be the destination set on the previous page if possible-->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Number of meals -->
+            <Label Text="Number of meals per day:"
+                   FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10">
+                <Stepper x:Name="MealsStepper"
+                         Minimum="0"
+                         Maximum="10"
+                         Increment="1"
+                         ValueChanged="OnMealsStepperValueChanged" />
+                <Label x:Name="MealsLabel" Text="0" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Food -->
+            <Label Text="Food Preferences:"
+                     FontAttributes="Bold" />            
+            <HorizontalStackLayout>
+                <CheckBox x:Name="IndianCheck" />
+                <Label Text="Indian" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="JapaneseCheck" />
+                <Label Text="Japanese" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="AmericanCheck" />
+                <Label Text="American" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ItalianCheck" />
+                <Label Text="Italian" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="BritishCheck" />
+                <Label Text="British" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="FrenchCheck" />
+                <Label Text="French" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ThaiCheck" />
+                <Label Text="Thai" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ChineseCheck" />
+                <Label Text="Chinese" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="GreekCheck" />
+                <Label Text="Greek" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <!-- Stopping here for now. These are all I could think of off the top of my head. -->
+
+            <!-- Experiences -->
+            <Label Text="Experience Preferences" 
+                   FontAttributes="Bold"/>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="MuseumCheck" />
+                <Label Text="Museum" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ZooCheck" />
+                <Label Text="Zoo" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="SpaCheck" />
+                <Label Text="Spa and wellness" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="BeachCheck" />
+                <Label Text="Beach" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="CastleCheck" />
+                <Label Text="Castles and fortresses" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ShoppingCheck" />
+                <Label Text="Shopping" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="OutdoorCheck" />
+                <Label Text="Hiking and outdoor" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ExtremeCheck" />
+                <Label Text="Extreme sports (ziplining, bungee jump etc.)" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <CheckBox x:Name="ExplorationCheck" />
+                <Label Text="Exploration" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <!-- Stopping here for now. The possibilities are endless! -->
+
+            <!-- Activity level -->
+            <Label Text="Activity Level:"
+                   FontAttributes="Bold" />
+            <StackLayout x:Name="ActivityLevelContainer" Orientation="Vertical" Spacing="10">
+                <RadioButton GroupName="ActivityLevel" Value="Very low" Content="0-5 km a day" />
+                <RadioButton GroupName="ActivityLevel" Value="Low" Content="6-10 km a day" />
+                <RadioButton GroupName="ActivityLevel" Value="Medium" Content="10-15 km a day" />            
+                <RadioButton GroupName="ActivityLevel" Value="High" Content="15-20 km a day" />
+                <RadioButton GroupName="ActivityLevel" Value="Very high" Content="20+ km a day" x:Name="ActivityRadio_20km"/>
+            </StackLayout>
+
+            <!-- Save and continue -->
+            <Button Text="Save and continue"
+                    Clicked="OnSavePreferencesClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

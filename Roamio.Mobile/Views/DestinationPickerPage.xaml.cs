@@ -24,6 +24,10 @@ public partial class DestinationPickerPage : ContentPage
 
     private async void OnNextClicked(object sender, EventArgs e)
     {
+        DestinationEntry.Unfocus();
+        StartDatePicker.Unfocus();
+        EndDatePicker.Unfocus();
+
         var destination = DestinationEntry.Text;
         var startDate = StartDatePicker.Date;
         var endDate = EndDatePicker.Date;
@@ -66,15 +70,8 @@ public partial class DestinationPickerPage : ContentPage
             DailyPlans = new List<string>()
         };
 
-        var createdTrip = await _apiService.CreateTripAsync(newTrip);
-        if (createdTrip != null)
-        {
-            DisplayAlert("Success", "Trip created successfully!", "OK");
-            // Navigate to TripPreferences page
-        }
-        else
-        {
-            await DisplayAlert("Error", "Trip creation failed. Please try again.", "OK");
-        }
+        TripDataStore.CurrentTrip = newTrip;
+
+        await Navigation.PushAsync(new PreferencesPage());
     }
 }

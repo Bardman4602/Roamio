@@ -20,5 +20,8 @@ namespace Roamio.API.Models
 
         [DynamoDBProperty]
         public List<string> FoodPreferences { get; set; }
+
+        [DynamoDBProperty]
+        public int MealsPerDay { get; set; }
     }
 }
