@@ -86,7 +86,7 @@ public partial class PreferencesPage : ContentPage
         currentTrip.UserPreferences.EnergyLevel = MapActivityLevelToInt(activityLevel);
 
         // Delete this after testing
-        var nessage = 
+        var message = 
                 $"Destination: {currentTrip.Destination}\n" +
                 $"Start Date: {currentTrip.StartDate}\n" +
                 $"End Date: {currentTrip.EndDate}\n" +
@@ -94,13 +94,9 @@ public partial class PreferencesPage : ContentPage
                 $"Activity level: {activityLevel}\n" +
                 $"Food: {string.Join(", ", foodPrefs)}\n" +
                 $"Experiences: {string.Join(", ", experiencePrefs)}";
-        await DisplayAlert("Confirm Selections", nessage, "OK");
-
-
-        // Save destination and user prefs
-        // Navigate to SuggestionsPage
-        // On SuggestionsPage, get suggestions from GoogleMapsAPI based on preferences and destination
-        // Selected suggestions will be added to currentTrip.DailyPlans
+        await DisplayAlert("Confirm Selections", message, "OK");
+  
+        await Navigation.PushAsync(new SuggestionsPage());
     }
 
     private int MapActivityLevelToInt(string activityLevel)
