@@ -14,5 +14,6 @@ namespace Roamio.Mobile.Models
         public int EnergyLevel { get; set; }
         public List<string> ActivityPreferences { get; set; }
         public List<string> FoodPreferences { get; set; }
+        public int MealsPerDay { get; set; }
     }
 }
