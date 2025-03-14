@@ -29,24 +29,6 @@ namespace Roamio.Mobile.Services
 
         public async Task<List<SuggestionItem>> GetRestaurantSuggestionsAsync(string destination, List<string> foodPrefs)
         {
-            //string query = $"Things to do in {destination}";
-            //string url = $"https://maps.googleapis.com/maps/api/place/textsearch/json?query={Uri.EscapeDataString(query)}&key={_apiKey}";
-            //System.Diagnostics.Debug.WriteLine($"Activity Suggestions Request: {url}");
-
-            //var placesResponse = await _httpClient.GetFromJsonAsync<PlacesResponse>(url);
-            //if (placesResponse != null && placesResponse.Status == "OK" && placesResponse.Results != null)
-            //{
-            //    var suggestions = placesResponse.Results.Select(r => new SuggestionItem
-            //    {
-            //        Name = r.Name,
-            //        Address = r.FormattedAddress,
-            //        Rating = r.Rating.ToString(),
-            //        Description = r.Types != null ? string.Join(", ", r.Types) : ""
-            //    }).ToList();
-            //    return suggestions;
-            //}
-            //return new List<SuggestionItem>();
-
             var allResults = new List<SuggestionItem>();
             foreach (var pref in foodPrefs)
             {
@@ -65,25 +47,7 @@ namespace Roamio.Mobile.Services
         }
 
         public async Task<List<SuggestionItem>> GetActivitySuggestionsAsync(string destination, List<string> activityPrefs)
-        {
-            //string query = $"Restaurants in {destination}";
-            //string url = $"https://maps.googleapis.com/maps/api/place/textsearch/json?query={Uri.EscapeDataString(query)}&key={_apiKey}";
-            //System.Diagnostics.Debug.WriteLine($"Restaurant Suggestions Request: {url}");
-
-            //var placesResponse = await _httpClient.GetFromJsonAsync<PlacesResponse>(url);
-            //if (placesResponse != null && placesResponse.Status == "OK" && placesResponse.Results != null)
-            //{
-            //    var suggestions = placesResponse.Results.Select(r => new SuggestionItem
-            //    {
-            //        Name = r.Name,
-            //        Address = r.FormattedAddress,
-            //        Rating = r.Rating.ToString(),
-            //        Description = r.Types != null ? string.Join(", ", r.Types) : ""
-            //    }).ToList();
-            //    return suggestions;
-            //}
-            //return new List<SuggestionItem>();
-
+        {          
             var allResults = new List<SuggestionItem>();
             foreach (var pref in activityPrefs)
             {
