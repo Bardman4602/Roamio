@@ -39,4 +39,26 @@ namespace Roamio.Mobile.Models
         public double lat { get; set; }
         public double lng { get; set; }
     }
+
+    public class SuggestionItem
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Rating { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class PlacesResponse
+    {
+        public string Status { get; set; }
+        public PlaceResult[] Results { get; set; }
+    }
+
+    public class PlaceResult
+    {
+        public string Name { get; set; }
+        public string FormattedAddress { get; set; }
+        public double Rating { get; set; }
+        public string[] Types { get; set; }
+    }
 }
