@@ -9,6 +9,7 @@
 
             <!-- Time slot selection -->
             <Label Text="Select time slot"
+                   FontSize="Medium"
                    FontAttributes="Bold" />
             <HorizontalStackLayout Spacing="20">
                 <TimePicker x:Name="StartTimePicker" />
@@ -18,6 +19,7 @@
 
             <!-- Activities per day -->
             <Label Text="Activities per day:"
+                   FontSize="Medium"
                    FontAttributes="Bold" />
             <Stepper x:Name="ActivitiesStepper"
                      Minimum="0"
@@ -29,6 +31,7 @@
 
             <!-- Google Maps Suggestions -->
             <Label Text="Suggested Restaurants:"
+                   FontSize="Medium"
                    FontAttributes="Bold" />
             <CollectionView x:Name="SuggestedRestaurantsCollection" SelectionMode="Multiple">
                 <CollectionView.ItemTemplate>
@@ -44,6 +47,7 @@
             </CollectionView>
 
             <Label Text="Suggested Experiences:"
+                   FontSize="Medium"
                    FontAttributes="Bold" />
             <CollectionView x:Name="SuggestedExperiencesCollection" SelectionMode="Multiple">
                 <CollectionView.ItemTemplate>

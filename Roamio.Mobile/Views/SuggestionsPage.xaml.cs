@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Linq;
 using Roamio.Mobile.Models;
 using Roamio.Mobile.Services;
 
@@ -58,24 +59,9 @@ public partial class SuggestionsPage : ContentPage
 			await DisplayAlert("Error", "No trip data found", "OK");
 			return;
         }
-
 		
-		var restaurantSuggestions = new List<SuggestionItem>
-		{
-            // Fetch suggestions from google.
-            new SuggestionItem { Name = "Restaurant A", Address = "123 Main St" },
-                new SuggestionItem { Name = "Restaurant B", Address = "456 Market St" },
-                new SuggestionItem { Name = "Restaurant C", Address = "789 Broadway" }
-        };
-
-        var experienceSuggestions = new List<SuggestionItem>
-        {
-            // Fetch suggestions from google.
-             new SuggestionItem { Name = "Museum X", Address = "Museum Rd" },
-                new SuggestionItem { Name = "Zoo Y", Address = "Zoo Ln" },
-                new SuggestionItem { Name = "Park Z", Address = "Park Ave" }
-        };
-
+		var restaurantSuggestions = await _googleMapsService.GetRestaurantSuggestionsAsync(currentTrip.Destination, currentTrip.UserPreferences.FoodPreferences);
+		var experienceSuggestions = await _googleMapsService.GetActivitySuggestionsAsync(currentTrip.Destination, currentTrip.UserPreferences.ActivityPreferences);
         SuggestedRestaurantsCollection.ItemsSource = restaurantSuggestions;
         SuggestedExperiencesCollection.ItemsSource = experienceSuggestions;
 
@@ -116,14 +102,5 @@ public partial class SuggestionsPage : ContentPage
                              $"Selected Activities: {string.Join(", ", selectedExperiences.Select(s => s.Name))}";
 
         await DisplayAlert("Confirm Selections", message, "OK");
-    }
-
-
-    public class SuggestionItem
-	{
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Rating { get; set; }
-		public string Description { get; set; }
-    }
+    }    
 }
