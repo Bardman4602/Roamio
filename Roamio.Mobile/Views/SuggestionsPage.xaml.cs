@@ -90,7 +90,7 @@ public partial class SuggestionsPage : ContentPage
 
         if (restaurantNames.Count <= selectedRestaurants.Count * 2 || activityNames.Count <= selectedActivities.Count * 2)
         {
-            bool proceed = await DisplayAlert("Warning", "To fill all days within the timeslot. Your days will have fewer activities. Proceed anyway?", "Yes", "No");
+            bool proceed = await DisplayAlert("Warning", "Not enough selections to fill all days within the timeslot. Your days will have fewer activities. More can be added later. Proceed anyway?", "Yes", "No");
             if (!proceed)
             {                
                 return;
