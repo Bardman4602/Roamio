@@ -90,7 +90,7 @@ public partial class SuggestionsPage : ContentPage
 
         if (restaurantNames.Count <= selectedRestaurants.Count * 2 || activityNames.Count <= selectedActivities.Count * 2)
         {
-            bool proceed = await DisplayAlert("Warning", "Not enough suggestions to fill all days. Proceed anyway?", "Yes", "No");
+            bool proceed = await DisplayAlert("Warning", "To fill all days within the timeslot. Your days will have fewer activities. Proceed anyway?", "Yes", "No");
             if (!proceed)
             {                
                 return;
@@ -116,10 +116,19 @@ public partial class SuggestionsPage : ContentPage
         var startTime = StartTimePicker.Time;
         var endTime = EndTimePicker.Time;
         int totalDays = (endDate - startDate).Days + 1;
+        if (totalDays <= 0) return;
         int mealsPerDay = currentTrip.UserPreferences.MealsPerDay;
-        int activitiesPerDay = currentTrip.UserPreferences.ActivityPreferences.Count > 0
-            ? currentTrip.UserPreferences.EnergyLevel
-            : currentTrip.UserPreferences.EnergyLevel;
+        //int activitiesPerDay = currentTrip.UserPreferences.ActivityPreferences.Count > 0
+        //    ? currentTrip.UserPreferences.EnergyLevel
+        //    : currentTrip.UserPreferences.EnergyLevel;
+
+        int totalRestaurants = restaurants.Count;
+        int restaurantsPerDay = totalRestaurants / totalDays;
+        int remainderRest = totalRestaurants % totalDays;
+
+        int totalActivities = activities.Count;
+        int activitiesPerDay = totalActivities / totalDays;
+        int remainderAct = totalActivities % totalDays;
 
         for (int d = 0; d < totalDays; d++)
         {
@@ -132,58 +141,93 @@ public partial class SuggestionsPage : ContentPage
                 Schedule = new List<ScheduleItem>()
             };
 
-            TimeSpan currentTime = startTime;
+            int dayRestCount = restaurantsPerDay + (d < remainderRest ? 1 : 0);
+            int dayActCount = activitiesPerDay + (d < remainderAct ? 1 : 0);
 
-            int activitiesUsed = 0;
-            int mealsUsed = 0;
-            while (currentTime < endTime)
+            var dayRestaurants = restaurants.Take(dayRestCount).ToList();
+            restaurants.RemoveRange(0, Math.Min(dayRestCount, restaurants.Count));
+
+            var dayActivities = activities.Take(dayActCount).ToList();
+            activities.RemoveRange(0, Math.Min(dayActCount, activities.Count));
+
+            TimeSpan currentTime = startTime;
+            int maxCount = Math.Max(dayRestCount, dayActCount);
+            for (int i = 0; i < maxCount; i++)
             {
-                if (activitiesUsed < activitiesPerDay && activities.Any())
+                if (i < dayActivities.Count)
                 {
-                    var activity = activities.First();
-                    activities.RemoveAt(0);
                     dayPlan.Schedule.Add(new ScheduleItem
                     {
                         Time = FormatTime(currentTime),
-                        Name = activity,
+                        Name = dayActivities[i],
                         Type = "Activity"
                     });
-                    activitiesUsed++;
                     currentTime = currentTime.Add(TimeSpan.FromHours(2)); // assuming 2 hours of activity - adjust as needed
-                }
-                else
-                {
-                    break;
+                    if (currentTime >= endTime) break;
                 }
 
-                if (mealsUsed < mealsPerDay && restaurants.Any())
+                if (i < dayRestaurants.Count)
                 {
-                    var restaurant = restaurants.First();
-                    restaurants.RemoveAt(0);
                     dayPlan.Schedule.Add(new ScheduleItem
                     {
                         Time = FormatTime(currentTime),
-                        Name = restaurant,
+                        Name = dayRestaurants[i],
                         Type = "Restaurant"
                     });
-                    mealsUsed++;
                     currentTime = currentTime.Add(TimeSpan.FromHours(2)); // assuming 2 hours for a meal - adjust as needed
-                }
-                else
-                {
-                    // no more meals or time left
-                    // maybe add option to expand the day? - possible future feature                    
+                    if (currentTime >= endTime) break;
                 }
             }
             currentTrip.DayPlans.Add(dayPlan);
+
+            //int activitiesUsed = 0;
+            //int mealsUsed = 0;
+            //while (currentTime < endTime)
+            //{
+            //    if (activitiesUsed < activitiesPerDay && activities.Any())
+            //    {
+            //        var activity = activities.First();
+            //        activities.RemoveAt(0);
+            //        dayPlan.Schedule.Add(new ScheduleItem
+            //        {
+            //            Time = FormatTime(currentTime),
+            //            Name = activity,
+            //            Type = "Activity"
+            //        });
+            //        activitiesUsed++;
+            //        currentTime = currentTime.Add(TimeSpan.FromHours(2)); // assuming 2 hours of activity - adjust as needed
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+
+            //    if (mealsUsed < mealsPerDay && restaurants.Any())
+            //    {
+            //        var restaurant = restaurants.First();
+            //        restaurants.RemoveAt(0);
+            //        dayPlan.Schedule.Add(new ScheduleItem
+            //        {
+            //            Time = FormatTime(currentTime),
+            //            Name = restaurant,
+            //            Type = "Restaurant"
+            //        });
+            //        mealsUsed++;
+            //        currentTime = currentTime.Add(TimeSpan.FromHours(2)); // assuming 2 hours for a meal - adjust as needed
+            //    }
+            //    else
+            //    {
+            //        // no more meals or time left
+            //        // maybe add option to expand the day? - possible future feature                    
+            //    }
+            //}
+            //currentTrip.DayPlans.Add(dayPlan);
         }
     }
 
     private string FormatTime(TimeSpan time)
     {
-        string formatted = time.ToString("hh':'mm");
-        if (formatted == "00:00")
-            return "";
-        return formatted;
+        string formatted = time.ToString("hh\\:mm");
+        return (formatted == "00:00") ? "" : formatted;
     }
 }
