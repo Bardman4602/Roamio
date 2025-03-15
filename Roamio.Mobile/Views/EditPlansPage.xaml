@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Roamio.Mobile.Views.EditPlansPage"
+             Title="Edit Your Plan">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <Label Text="Edit Your Selections" 
+             FontSize="24" 
+             FontAttributes="Bold" 
+             HorizontalOptions="Center" />
+
+            <!-- Time Slot Pickers -->
+            <Label Text="Select your desired time slot:" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10">
+                <TimePicker x:Name="StartTimePicker" Time="08:00:00" />
+                <Label Text="to" VerticalOptions="Center"/>
+                <TimePicker x:Name="EndTimePicker" Time="20:00:00" />
+            </HorizontalStackLayout>
+
+            <!-- Restaurants Per Day -->
+            <Label Text="Restaurants per day:" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10">
+                <Stepper x:Name="RestaurantsStepper" Minimum="0" Maximum="10" Increment="1" ValueChanged="OnRestaurantsStepperValueChanged" />
+                <Label x:Name="RestaurantsLabel" Text="0" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Restaurant Suggestions -->
+            <Label Text="Restaurants" FontAttributes="Bold" />
+            <CollectionView x:Name="SuggestedRestaurantsCollection"
+                      SelectionMode="Multiple"
+                      HeightRequest="200">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Address}" FontAttributes="Italic" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Activities Per Day -->
+            <Label Text="Activities per day:" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10">
+                <Stepper x:Name="ActivitiesStepper" Minimum="0" Maximum="10" Increment="1" ValueChanged="OnActivitiesStepperValueChanged" />
+                <Label x:Name="ActivitiesLabel" Text="0" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Activity Suggestions -->
+            <Label Text="Activities" FontAttributes="Bold" />
+            <CollectionView x:Name="SuggestedExperiencesCollection"
+                      SelectionMode="Multiple"
+                      HeightRequest="200">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Address}" FontAttributes="Italic" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <!-- Save Changes Button -->
+            <Button Text="Save Changes" Clicked="OnConfirmClicked" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

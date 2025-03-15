@@ -43,9 +43,7 @@ public partial class SuggestedDayPlansPage : ContentPage
 
     private async void OnChangePlanClicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync(); // Go back to the previous page - will be changed to EditPlanPage
-
-        // Go to EditPlanPage - Not implemented yet
+        await Navigation.PushAsync(new EditPlansPage());
     }
 
     private async void OnConfirmPlanClicked(object sender, EventArgs e)
