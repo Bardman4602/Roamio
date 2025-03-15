@@ -18,7 +18,7 @@
                     <DataTemplate>
                         <StackLayout Padding="10">
                             
-                            <Label Text="{Binding Date, StringFormat='Day {Binding DayNumber} - {0:yyyy-MM-dd}'}"
+                            <Label Text="{Binding Date, StringFormat='Day {Binding DayNumber}'}"
                                    FontAttributes="Bold"
                                    FontSize="18" />
                             
