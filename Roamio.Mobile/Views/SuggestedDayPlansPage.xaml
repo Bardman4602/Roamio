@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Roamio.Mobile.Views.SuggestedDayPlansPage"
+             Title="Suggested Day Plans for [days] in [destinaiton]"> <!--make dynamic-->
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Suggested day plans"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+            
+            <!-- Group by day -->
+            <CollectionView x:Name="DayPlansCollection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            
+                            <Label Text="{Binding Date, StringFormat='Day {Binding DayNumber}'}"
+                                   FontAttributes="Bold"
+                                   FontSize="18" />
+                            
+                            <!-- Nested view for each day's schedule -->
+                            <CollectionView ItemsSource="{Binding Schedule}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal" Spacing="10">
+                                            <Label Text="{Binding Time}"
+                                                   FontAttributes="Bold"
+                                                   WidthRequest="60" />
+                                            
+                                            <Label Text="{Binding Name}" />
+                                            
+                                            <Label Text="{Binding Type, StringFormat='({0})'}" 
+                                                   FontAttributes="Italic"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>                            
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <!-- Buttons for editing or confirming -->
+            <HorizontalStackLayout Spacing="20"
+                                   HorizontalOptions="Center" >
+                <Button Text="Change plan"
+                        Clicked="OnChangePlanClicked" />
+                
+                <Button Text="Confirm plan"
+                        Clicked="OnConfirmPlanClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>
