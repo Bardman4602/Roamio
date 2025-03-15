@@ -26,16 +26,33 @@
                             <CollectionView ItemsSource="{Binding Schedule}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        
+                                        <StackLayout Orientation="Horizontal" Spacing="10">
+                                            <Label Text="{Binding Time}"
+                                                   FontAttributes="Bold"
+                                                   WidthRequest="60" />
+                                            
+                                            <Label Text="{Binding Name}" />
+                                            
+                                            <Label Text="{Binding Type, StringFormat='({0})'}" 
+                                                   FontAttributes="Italic"/>
+                                        </StackLayout>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                            </CollectionView>
-                            
+                            </CollectionView>                            
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+            
+            <!-- Buttons for editing or confirming -->
+            <HorizontalStackLayout Spacing="20"
+                                   HorizontalOptions="Center" >
+                <Button Text="Change plan"
+                        Clicked="OnChangePlanClicked" />
+                
+                <Button Text="Confirm plan"
+                        Clicked="OnConfirmPlanClicked" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
     
