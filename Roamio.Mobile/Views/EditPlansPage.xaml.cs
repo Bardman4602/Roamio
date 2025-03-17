@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Roamio.Mobile.Models;     
 using Roamio.Mobile.Services;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Roamio.Mobile.Views;
 
@@ -102,29 +103,45 @@ public partial class EditPlansPage : ContentPage
 
     private async void OnConfirmClicked(object sender, EventArgs e)
     {        
-        var selectedRestaurants = SuggestedRestaurantsCollection.SelectedItems?.Cast<SuggestionItem>().ToList() ?? new List<SuggestionItem>();
-        var selectedActivities = SuggestedExperiencesCollection.SelectedItems?.Cast<SuggestionItem>().ToList() ?? new List<SuggestionItem>();
-
         var currentTrip = TripDataStore.CurrentTrip;
+
         if (currentTrip == null)
         {
             await DisplayAlert("Error", "No trip data available.", "OK");
             return;
         }
-        
-        currentTrip.RestaurantSelections = selectedRestaurants.Select(r => r.Name).Distinct().ToList();
-        currentTrip.ActivitySelections = selectedActivities.Select(a => a.Name).Distinct().ToList();
 
-        DayPlanGenerator.GenerateDayPlans(
-            currentTrip,
-            currentTrip.RestaurantSelections,
-            currentTrip.ActivitySelections,
-            StartTimePicker.Time,
-            EndTimePicker.Time
-            );
+        var originalRestaurants = currentTrip.RestaurantSelections ?? new List<string>();
+        var originalActivities = currentTrip.ActivitySelections ?? new List<string>();
+
+        var selectedRestaurants = SuggestedRestaurantsCollection.SelectedItems
+            ?.Cast<SuggestionItem>()
+            .Select(r => r.Name)
+            .Distinct()
+            .ToList() ?? new List<string>();
+
+        var selectedActivities = SuggestedExperiencesCollection.SelectedItems
+            ?.Cast<SuggestionItem>()
+            .Select(a => a.Name)
+            .Distinct()
+            .ToList() ?? new List<string>();
+        
+        var newRestaurants = selectedRestaurants.Except(originalRestaurants).ToList();
+        var newActivities = selectedActivities.Except(originalActivities).ToList();
+
+        originalRestaurants.AddRange(newRestaurants);
+        originalActivities.AddRange(newActivities);
+
+        currentTrip.RestaurantSelections = originalRestaurants;
+        currentTrip.ActivitySelections = originalActivities;
+
+        DayPlanGenerator.AddNewItemsToExistingPlan(currentTrip, newRestaurants, newActivities, StartTimePicker.Time, EndTimePicker.Time);
+        
 
         await DisplayAlert("Plan Updated", "Your selections have been updated.", "OK");
-        
+
+        WeakReferenceMessenger.Default.Send(new TripUpdatedMessage(currentTrip));
+
         await Navigation.PopAsync();
     }
 }

@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Roamio.Mobile.Models;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Roamio.Mobile.Views;
 
-public partial class SuggestedDayPlansPage : ContentPage
+public partial class SuggestedDayPlansPage : ContentPage, IRecipient<TripUpdatedMessage>
 {
-	public SuggestedDayPlansPage()
+    public SuggestedDayPlansPage()
 	{
 		InitializeComponent();
-	}
+    
+    }   
 
     protected override void OnAppearing()
     {
-        base.OnAppearing();
+        base.OnAppearing();        
 
         var currentTrip = TripDataStore.CurrentTrip;
 
@@ -38,8 +40,22 @@ public partial class SuggestedDayPlansPage : ContentPage
         else
         {
             DisplayAlert("Error", "No dayplans found", "OK");
-        }        
-    }    
+        }
+        
+        RefreshDayPlans();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        WeakReferenceMessenger.Default.Unregister<TripUpdatedMessage>(this);
+    }
+
+    public void Receive(TripUpdatedMessage message)
+    {
+        TripDataStore.CurrentTrip = message.Value;
+        RefreshDayPlans();
+    }
 
     private async void OnChangePlanClicked(object sender, EventArgs e)
     {
@@ -50,9 +66,22 @@ public partial class SuggestedDayPlansPage : ContentPage
     {
         await DisplayAlert("Plan Confirmed", "Your day plan has been confirmed!", "OK");
 
-        // Save evetything to the database. maybe?
-
+        // Save evetything to local storage or db? maybe?
 
         await Navigation.PushAsync(new FinalizedDayPlansPage());
+    }
+
+    private void RefreshDayPlans()
+    {
+        var currentTrip = TripDataStore.CurrentTrip;
+        if (currentTrip?.DayPlans != null && currentTrip.DayPlans.Any())
+        {
+            DayPlansCollection.ItemsSource = null;
+            DayPlansCollection.ItemsSource = currentTrip.DayPlans;
+        }
+        else
+        {
+            DisplayAlert("Error", "No dayplans found", "OK");
+        }
     }    
 }

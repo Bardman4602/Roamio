@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roamio.Mobile.Services;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace Roamio.Mobile.Models
 {
@@ -20,5 +21,12 @@ namespace Roamio.Mobile.Models
         public List<string> RestaurantSelections { get; set; } = new List<string>();
         public List<string> ActivitySelections { get; set; } = new List<string>();
         public List<DayPlan> DayPlans { get; set; } = new List<DayPlan>();
+    }
+
+    public class TripUpdatedMessage : ValueChangedMessage<Trip>
+    {
+        public TripUpdatedMessage(Trip trip) : base(trip)
+        {
+        }
     }
 }

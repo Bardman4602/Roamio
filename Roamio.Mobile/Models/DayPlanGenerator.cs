@@ -8,17 +8,17 @@ namespace Roamio.Mobile.Models
 {
     public static class DayPlanGenerator
     {
-        public static void GenerateDayPlans(Trip currentTrip, List<string> restaurants, List<string> activities, TimeSpan startTime, TimeSpan endTime)
+        public static void GenerateDayPlans(Trip currentTrip, List<string> restaurants, List<string> activities,
+            TimeSpan startTime, TimeSpan endTime)
         {
             currentTrip.DayPlans.Clear();
 
-            if (!DateTime.TryParse(currentTrip.StartDate, out var startDate) ||
-                !DateTime.TryParse(currentTrip.EndDate, out var endDate))
+            if (!DateTime.TryParse(currentTrip.StartDate, out var startDate) || !DateTime.TryParse(currentTrip.EndDate, out var endDate))
             {
                 return;
             }
 
-            int totalDays = (endDate - startDate).Days + 1;            
+            int totalDays = (endDate - startDate).Days + 1;
             for (int d = 0; d < totalDays; d++)
             {
                 var dayPlan = new DayPlan
@@ -27,10 +27,10 @@ namespace Roamio.Mobile.Models
                     Date = startDate.AddDays(d),
                     Schedule = new List<ScheduleItem>()
                 };
-                                
+
                 if (activities.Any())
                 {
-                    string activity = activities[d % activities.Count];
+                    var activity = activities[d % activities.Count];
                     dayPlan.Schedule.Add(new ScheduleItem
                     {
                         Time = FormatTime(startTime),
@@ -38,10 +38,10 @@ namespace Roamio.Mobile.Models
                         Type = "Activity"
                     });
                 }
-                                
+
                 if (restaurants.Any())
                 {
-                    string restaurant = restaurants[d % restaurants.Count];                    
+                    var restaurant = restaurants[d % restaurants.Count];
                     dayPlan.Schedule.Add(new ScheduleItem
                     {
                         Time = FormatTime(startTime.Add(TimeSpan.FromHours(2))),
@@ -49,14 +49,86 @@ namespace Roamio.Mobile.Models
                         Type = "Restaurant"
                     });
                 }
-
                 currentTrip.DayPlans.Add(dayPlan);
             }
+
+            // remove duplicates
+            var usedItems = new HashSet<string>();
+            foreach (var day in currentTrip.DayPlans)
+            {
+                var newSchedule = new List<ScheduleItem>();
+                foreach (var si in day.Schedule)
+                {
+                    if (!usedItems.Contains(si.Name))
+                    {
+                        newSchedule.Add(si);
+                        usedItems.Add(si.Name);
+                    }
+                }
+                day.Schedule = newSchedule;
+            }
+        }
+
+        public static void AddNewItemsToExistingPlan(Trip currentTrip, List<string> newRestaurants, List<string> newActivities,
+            TimeSpan startTime, TimeSpan endTime)
+        {
+            if (currentTrip.DayPlans == null || !currentTrip.DayPlans.Any()) return;
+
+            foreach (var activity in newActivities)
+            {
+                PlaceNewItem(currentTrip.DayPlans, activity, "Activity", startTime, endTime);
+            }
+            foreach (var restaurant in newRestaurants)
+            {
+                PlaceNewItem(currentTrip.DayPlans, restaurant, "Restaurant", startTime, endTime);
+            }
+
+            // remove duplicates
+            var usedItems = new HashSet<string>();
+            foreach (var day in currentTrip.DayPlans)
+            {
+                var newSchedule = new List<ScheduleItem>();
+                foreach (var si in day.Schedule)
+                {
+                    if (!usedItems.Contains(si.Name))
+                    {
+                        newSchedule.Add(si);
+                        usedItems.Add(si.Name);
+                    }
+                }
+                day.Schedule = newSchedule;
+            }
+        }
+
+        private static void PlaceNewItem(List<DayPlan> dayPlans, string itemName, string itemType,
+             TimeSpan startTime, TimeSpan endTime)
+        {
+            foreach (var day in dayPlans)
+            {
+                if (day.Schedule.Count < 4)
+                {
+                    var timeForThisItem = CalculateTimeForNextSlot(day.Schedule, startTime, endTime);
+                    day.Schedule.Add(new ScheduleItem
+                    {
+                        Time = FormatTime(timeForThisItem),
+                        Name = itemName,
+                        Type = itemType
+                    });
+                    return;
+                }
+            }
+        }
+
+        private static TimeSpan CalculateTimeForNextSlot(List<ScheduleItem> schedule, TimeSpan startTime, TimeSpan endTime)
+        {            
+            int itemCount = schedule.Count;
+            var nextSlot = startTime.Add(TimeSpan.FromHours(2 * itemCount));         
+            return nextSlot;
         }
 
         private static string FormatTime(TimeSpan time)
         {
-            string formatted = time.ToString("hh\\:mm");
+            string formatted = time.ToString(@"hh\:mm");
             return (formatted == "00:00") ? "" : formatted;
         }
     }
