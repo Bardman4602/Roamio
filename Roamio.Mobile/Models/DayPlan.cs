@@ -23,6 +23,7 @@ namespace Roamio.Mobile.Models
         public int DayNumber { get; set; }
         public DateTime Date { get; set; }
         public List<ScheduleItem> Schedule { get; set; } = new List<ScheduleItem>();
+        public string Summary { get; set; } //Maybe change to a list of schedule items for the day?
     }
 
     public class ScheduleItem
@@ -30,5 +31,6 @@ namespace Roamio.Mobile.Models
         public string Time { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
+        public string LocationQuery { get; set; }
     }
 }

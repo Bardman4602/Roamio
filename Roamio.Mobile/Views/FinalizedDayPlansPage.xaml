@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Roamio.Mobile.Views.FinalizedDayPlansPage"
+             Title="Finalized Plans">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <Label Text="Your Finalized Day Plans" 
+             FontSize="24" 
+             FontAttributes="Bold"
+             HorizontalOptions="Center" />
+            
+            <CollectionView x:Name="DayPlansCollection"
+                      SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BorderColor="Gray">
+                            <VerticalStackLayout Spacing="10">                                
+                                <Label Text="{Binding DayNumber, StringFormat='Day {0}'}"
+                                       FontAttributes="Bold" FontSize="18" />
+                                <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}"
+                                       FontSize="16" />                                
+                                <Label Text="{Binding Summary}" FontSize="14" TextColor="Gray" />                                
+                                <Button Text="Start Day" 
+                                        Clicked="OnStartDayClicked"
+                                        CommandParameter="{Binding .}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

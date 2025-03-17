@@ -50,7 +50,9 @@ public partial class SuggestedDayPlansPage : ContentPage
     {
         await DisplayAlert("Plan Confirmed", "Your day plan has been confirmed!", "OK");
 
-        // Save evetything to the database
-        // Go to DisplayDayPlanPage
+        // Save evetything to the database. maybe?
+
+
+        await Navigation.PushAsync(new FinalizedDayPlansPage());
     }    
 }
