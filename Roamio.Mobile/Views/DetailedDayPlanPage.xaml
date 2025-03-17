@@ -12,6 +12,20 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
+            <Label Text="Select mode of transport:"
+                   FontAttributes="Bold" />
+            <Picker x:Name="TransportModePicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>driving</x:String>
+                        <x:String>walking</x:String>
+                        <x:String>bicycling</x:String>
+                        <x:String>public transit</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+
             <!-- Schedule List -->
             <CollectionView x:Name="ScheduleCollection" 
                 SelectionMode="None" >
@@ -20,40 +34,30 @@
                         <Frame Padding="10"
                                Margin="5"
                                BorderColor="Gray" >
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding Time}"
+                            <VerticalStackLayout Spacing="5">
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Time}"
                                    FontAttributes="Bold"
                                    WidthRequest="60" />
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding Name}"
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name}"
                                            FontAttributes="Bold" />
-                                    <Label Text="{Binding Type, StringFormat='({0})'}" 
+                                        <Label Text="{Binding Type, StringFormat='({0})'}" 
                                            FontAttributes="Italic" 
                                            FontSize="12"/>
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <Button Text="Get Directions"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="OnGetDirectionsForItemClicked"
+                                        HorizontalOptions="Start" />
+                            </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>           
 
-            <Label Text="Select mode of transport:"
-                   FontAttributes="Bold" />
-            <Picker x:Name="TransportModePicker">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Driving</x:String>
-                        <x:String>Walking</x:String>
-                        <x:String>Bicycling</x:String>
-                        <x:String>Public Transit</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-                <Picker.SelectedIndex>0</Picker.SelectedIndex>
-            </Picker>
-
-            <Button Text="Get Directions" Clicked="OnGetDirectionsClicked"/>
-
-            <!-- Optional: Label for debugging the generated URL -->
+            <!-- Label for debugging the generated URL -->
             <Label x:Name="DebugUrlLabel" TextColor="Blue" TextDecorations="Underline" IsVisible="False"/>
 
         </VerticalStackLayout>
