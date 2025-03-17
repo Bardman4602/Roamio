@@ -7,8 +7,6 @@ namespace Roamio.Mobile.Views;
 
 public partial class SuggestedDayPlansPage : ContentPage, IRecipient<TripUpdatedMessage>
 {
-    
-
     public SuggestedDayPlansPage()
 	{
 		InitializeComponent();
@@ -68,8 +66,7 @@ public partial class SuggestedDayPlansPage : ContentPage, IRecipient<TripUpdated
     {
         await DisplayAlert("Plan Confirmed", "Your day plan has been confirmed!", "OK");
 
-        // Save evetything to the database. maybe?
-
+        // Save evetything to local storage or db? maybe?
 
         await Navigation.PushAsync(new FinalizedDayPlansPage());
     }
