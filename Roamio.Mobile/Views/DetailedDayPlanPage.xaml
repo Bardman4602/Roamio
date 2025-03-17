@@ -7,34 +7,55 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
-            <Label x:Name="DayTitleLabel"
+            <Label x:Name="DayPlanTitleLabel"
                    FontSize="24"
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
             <!-- Schedule List -->
-            <CollectionView x:Name="ScheduleCollection"
-                            SelectionMode="None" >
+            <CollectionView x:Name="ScheduleCollection" 
+                SelectionMode="None" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <HorizontalStackLayout Spacing="10">
-                            <!--Time-->
-                            <Label Text="{Binding Time}"
-                               FontAttributes="Bold"
-                               WidthRequest="60" />
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Name}"
-                                   FontAttributes="Bold" />
-                                <Label Text="{Binding Type, StringFormat='({0})'}"
-                                   FontAttributes="Italic"
-                                   FontSize="12" />
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                        <Frame Padding="10"
+                               Margin="5"
+                               BorderColor="Gray" >
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Time}"
+                                   FontAttributes="Bold"
+                                   WidthRequest="60" />
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding Type, StringFormat='({0})'}" 
+                                           FontAttributes="Italic" 
+                                           FontSize="12"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <Label Text="Select mode of transport:"
+                   FontAttributes="Bold" />
+            <Picker x:Name="TransportModePicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Driving</x:String>
+                        <x:String>Walking</x:String>
+                        <x:String>Bicycling</x:String>
+                        <x:String>Public Transit</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+
+            <Button Text="Get Directions" Clicked="OnGetDirectionsClicked"/>
+
+            <!-- Optional: Label for debugging the generated URL -->
+            <Label x:Name="DebugUrlLabel" TextColor="Blue" TextDecorations="Underline" IsVisible="False"/>
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

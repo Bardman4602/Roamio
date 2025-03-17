@@ -31,5 +31,6 @@ namespace Roamio.Mobile.Models
         public string Time { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
+        public string LocationQuery { get; set; }
     }
 }
