@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Roamio.Mobile.Services;
-
+using System.IO;
 
 namespace Roamio.Mobile
 {
@@ -22,6 +22,10 @@ namespace Roamio.Mobile
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            //SQLite setup
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "tripDb.sqlite");
+            builder.Services.AddSingleton<LocalDatabaseService>(new LocalDatabaseService(dbPath));
 
             // AWS API Base url.
             builder.Services.AddHttpClient("APIClient", client =>

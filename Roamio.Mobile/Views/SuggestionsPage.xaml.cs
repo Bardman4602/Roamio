@@ -131,6 +131,9 @@ public partial class SuggestionsPage : ContentPage
             EndTimePicker.Time
         );
 
+        var dbService = MauiProgram.Services.GetRequiredService<LocalDatabaseService>();
+        await dbService.SaveTripAsync(currentTrip);
+
         await DisplayAlert("Plan Created", "Your plan has been created.", "OK");
 
         await Navigation.PushAsync(new SuggestedDayPlansPage());
