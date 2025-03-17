@@ -20,7 +20,7 @@ public partial class DetailedDayPlanPage : ContentPage
 
         if (_dayPlan != null)
         {
-            DayPlanTitleLabel.Text = $"Day {_dayPlan.DayNumber} - {_dayPlan.Date:yyyy-MM-dd}";
+            DayPlanTitleLabel.Text = $"Day {_dayPlan.DayNumber} - {_dayPlan.Date:dd/MM/yyyy}";
             ScheduleCollection.ItemsSource = _dayPlan.Schedule;
         }
     }

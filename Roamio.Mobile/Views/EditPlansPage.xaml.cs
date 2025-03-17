@@ -140,6 +140,9 @@ public partial class EditPlansPage : ContentPage
 
         await DisplayAlert("Plan Updated", "Your selections have been updated.", "OK");
 
+        var dbService = MauiProgram.Services.GetRequiredService<LocalDatabaseService>();
+        await dbService.SaveTripAsync(currentTrip);
+
         WeakReferenceMessenger.Default.Send(new TripUpdatedMessage(currentTrip));
 
         await Navigation.PopAsync();
