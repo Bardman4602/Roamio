@@ -51,6 +51,22 @@ namespace Roamio.Mobile.Models
                 }
                 currentTrip.DayPlans.Add(dayPlan);
             }
+
+            // remove duplicates
+            var usedItems = new HashSet<string>();
+            foreach (var day in currentTrip.DayPlans)
+            {
+                var newSchedule = new List<ScheduleItem>();
+                foreach (var si in day.Schedule)
+                {
+                    if (!usedItems.Contains(si.Name))
+                    {
+                        newSchedule.Add(si);
+                        usedItems.Add(si.Name);
+                    }
+                }
+                day.Schedule = newSchedule;
+            }
         }
 
         public static void AddNewItemsToExistingPlan(Trip currentTrip, List<string> newRestaurants, List<string> newActivities,
@@ -65,6 +81,22 @@ namespace Roamio.Mobile.Models
             foreach (var restaurant in newRestaurants)
             {
                 PlaceNewItem(currentTrip.DayPlans, restaurant, "Restaurant", startTime, endTime);
+            }
+
+            // remove duplicates
+            var usedItems = new HashSet<string>();
+            foreach (var day in currentTrip.DayPlans)
+            {
+                var newSchedule = new List<ScheduleItem>();
+                foreach (var si in day.Schedule)
+                {
+                    if (!usedItems.Contains(si.Name))
+                    {
+                        newSchedule.Add(si);
+                        usedItems.Add(si.Name);
+                    }
+                }
+                day.Schedule = newSchedule;
             }
         }
 
