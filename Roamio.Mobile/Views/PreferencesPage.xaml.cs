@@ -26,8 +26,7 @@ public partial class PreferencesPage : ContentPage
     }
 
 	private async void OnSavePreferencesClicked(object sender, EventArgs e)
-	{
-        // rewrite these like the activity level radio buttons
+	{        
         var foodPrefs = new List<string>();
 		if (IndianCheck.IsChecked) foodPrefs.Add("Indian");
         if (JapaneseCheck.IsChecked) foodPrefs.Add("Japanese");
@@ -84,8 +83,7 @@ public partial class PreferencesPage : ContentPage
         currentTrip.UserPreferences.FoodPreferences = foodPrefs;
         currentTrip.UserPreferences.ActivityPreferences = experiencePrefs;
         currentTrip.UserPreferences.EnergyLevel = MapActivityLevelToInt(activityLevel);
-
-        // Delete this after testing
+        
         var message = 
                 $"Destination: {currentTrip.Destination}\n" +
                 $"Start Date: {currentTrip.StartDate}\n" +
