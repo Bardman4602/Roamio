@@ -14,8 +14,7 @@ namespace Roamio.Mobile.Services
 
         public GoogleMapsService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
-            _httpClient = httpClientFactory.CreateClient("GoogleMapsClient");
-            //_apiKey = configuration["GoogleMaps:ApiKey"];
+            _httpClient = httpClientFactory.CreateClient("GoogleMapsClient");            
         }
         
 
