@@ -41,8 +41,7 @@ namespace Roamio.Mobile.Services
             {
                 var json = await response.Content.ReadAsStringAsync();
                 System.Diagnostics.Debug.WriteLine("Raw JSON from server: " + json);
-
-                // Manually deserialize so you can catch errors
+                
                 var createdUser = System.Text.Json.JsonSerializer.Deserialize<User>(json);
                 return createdUser;
             }

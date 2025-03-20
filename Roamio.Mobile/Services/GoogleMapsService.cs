@@ -9,8 +9,7 @@ namespace Roamio.Mobile.Services
 {
     public class GoogleMapsService : IGoogleMapsService
     {
-        private readonly HttpClient _httpClient;
-        //private readonly string _apiKey;
+        private readonly HttpClient _httpClient;        
         private readonly string _apiKey = "AIzaSyBqDN4XjKJduNIl7mnjVN7d5yU_xCg5xWE";  // Terrible practice. I know.
 
         public GoogleMapsService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
